@@ -1,9 +1,10 @@
 import React, {PropTypes, Component} from 'react';
-import {Router, Route} from 'react-router';
+import {Router, Route, IndexRoute} from 'react-router';
 
 import App from './App';
-import Button from './pages/button/index';
 import SignUp from './pages/signup/index';
+import Table from './pages/table/index';
+import Button from './pages/button/index';
 
 import {queryString} from './utils/SearchQuery';
 
@@ -12,24 +13,28 @@ export default class Root extends Component {
         history: PropTypes.object.isRequired
     };
 
-    // componentWillMount() {
-    //     queryString(location.search, (err, query) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             console.log(query);
-    //         }
-    //     })
-    // }
-
-    requireWechat(nextState, replace) {
+    /**
+     * 根目录进入时，需要检测参数
+     */
+    componentWillMount() {
         queryString(location.search, (err, query) => {
             if (err) {
                 console.log(err);
             } else {
                 console.log(query);
             }
-        });
+        })
+    }
+
+    requireWechat(nextState, replace) {
+        // queryString(location.search, (err, query) => {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log(query);
+        //     }
+        // });
+        console.log('onEnter call...');
         replace({pathname: '/signup'});
     }
 
@@ -37,8 +42,9 @@ export default class Root extends Component {
         const {history} = this.props;
         return (
             <Router history={history}>
-                <Route onEnter={this.requireWechat} name='explore' path='/' component={App}>
-                    <Route path="button" name="button" component={Button}/>
+                <Route name='explore' path='/' component={App}>
+                    <IndexRoute onEnter={this.requireWechat} component={Button}/>
+                    <Route path="table" name="table" component={Table}/>
                 </Route>
                 <Route path="/signup" name="button" component={SignUp}/>
             </Router>

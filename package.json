@@ -50,7 +50,6 @@
     "postcss": "^5.0.19",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
-    "react-transform-webpack-hmr": "^0.1.6",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1",
